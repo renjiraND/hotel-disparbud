@@ -29,8 +29,6 @@ stages:
 
 Build:
   stage: build
-  tags:
-    - node
   before_script: 
     - yarn config set cache-folder .yarn
     - yarn install 
@@ -39,8 +37,6 @@ Build:
 
 Test:
   stage: test
-  tags:
-  - node
   before_script: 
     - yarn config set cache-folder .yarn
     - yarn install 
@@ -56,8 +52,6 @@ Test:
 
 Deploy to Staging:
   stage: staging
-  tags:
-    - node
   before_script:
     # Generates to connect to the AWS unit the SSH key.
     - mkdir -p ~/.ssh
@@ -88,8 +82,6 @@ Open Merge Request:
 
 Deploy to Production:
   stage: production
-  tags:
-    - node
   before_script:
   # Generates to connect to the AWS unit the SSH key.
     - mkdir -p ~/.ssh
