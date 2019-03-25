@@ -3,7 +3,7 @@ A simple web app to ease the process of West Java's hotel certification montitor
 
 ## How to run (dev mode)
 ```
-# requirments.txt?
+pip install -r requirements.txt
 python server.py
 ```
 
