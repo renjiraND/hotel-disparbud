@@ -2,7 +2,6 @@ from flask import Flask, request, redirect, render_template
 from flask_login import login_user, logout_user, current_user, login_required
 from controller.session import Session
 from model.user import User
-from model.users import users # mock database
 
 app = Flask(__name__)
 app.secret_key = 'yeeeeeet' # necessary for session handling?
@@ -14,17 +13,21 @@ def login():
         return render_template('login.html')
     elif request.method == 'POST':
         email = request.form['email']
-        if email in users and request.form['password'] == users[email]['password']:
-            user = User()
+        try:
+            user = User.get(User.email == email)
+            if user.password != request.form['password']: 
+                return redirect('login')
             user.id = email
             login_user(user)
             return redirect('/')
+        except:
+            return redirect('/login')
     return 'Bad login'
 
 @app.route('/logout')
 def logout():
     logout_user()
-    return 'Logged out'
+    return redirect('/login')
 
 @app.route("/")
 @login_required # Use this keyword to enforce authentication
