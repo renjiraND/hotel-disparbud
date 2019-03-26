@@ -8,5 +8,15 @@ python server.py
 ```
 
 ## Structure
-* templates/ is the folder to store templatable static html pages
-* ...to be added later
+* `server.py` - main routing and serving logic
+* `templates/` - templatable static html pages (view)
+* `controller/` - webapp logic
+* `model/` - objects to represent data in database
+
+## Models
+* User
+  * Stored as `users` table in the database
+  * has 3 fields
+    * email - primary key
+    * password
+    * mode - True is for LSU and False is for Disparbud
