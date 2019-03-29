@@ -7,7 +7,7 @@ from server import create_app
 
 import warnings
 
-warnings.filterwarnings('ignore')
+# warnings.filterwarnings('ignore')
 
 
 @pytest.fixture
@@ -26,7 +26,4 @@ def logout(client):
 
 def test_login(client):
 	rv = login(client, 'diw@n.gs', 'yeet')
-	print('gimana yak cara parse responsenya')
-	print(rv.content)
-	print(type(rv))
-	assert 'Kemenbudpar Jaya' in rv
+	assert "diw@n.gs" in str(rv.get_data())
