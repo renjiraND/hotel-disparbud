@@ -1,11 +1,19 @@
 # Hotel-Disparbud
 A simple web app to ease the process of West Java's hotel certification montitoring by West Java Ministry of Touristry.
 
-## How to run (dev mode)
+## First time run (dev mode)
 ```
-pip install -r requirements.txt
+pipenv shell
+pipenv install
 python server.py
 ```
+
+## Run (dev mode)
+```
+pipenv shell
+python server.py
+```
+
 
 ## Structure
 * `server.py` - main routing and serving logic
