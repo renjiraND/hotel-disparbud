@@ -38,4 +38,4 @@ def create_app():
 
 if __name__ == '__main__':
     app = create_app()
-    app.run()
+    app.run(host="0.0.0.0") # unlike 127.0.0.1, 0.0.0.0 is externally visible
