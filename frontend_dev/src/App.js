@@ -1,19 +1,20 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Routes from "./Routes";
+
 
 function App() {
   return (
     <Router>
       <div>
         <Header />
-        <Route exact path="/" component={Home} />
-        <Route path="/browse" component={Browse} />
+        <Routes/>
       </div>
     </Router>
   );
 }
 
-function Home() {
+export function Home() {
   return (
     <div>
       <h2>Home</h2>
@@ -26,7 +27,7 @@ function Hotel({ match }) {
   return <h3>Requested hotel id: {match.params.id}</h3>;
 }
 
-function Browse({ match }) {
+export function Browse({ match }) {
   return (
     <div>
       <h2>Browse Hotels</h2>
