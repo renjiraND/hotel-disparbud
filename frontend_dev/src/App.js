@@ -1,14 +1,18 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Navbar,Nav } from "react-bootstrap";
 import Routes from "./Routes";
+import { withRouter } from "react-router"
 
 
 function App() {
   return (
     <Router>
       <div>
-        <Header />
-        <Routes/>
+        <HeaderWithRouter />
+        <div className="container">
+          <Routes/>
+        </div>
       </div>
     </Router>
   );
@@ -54,17 +58,26 @@ export function Browse({ match }) {
   );
 }
 
-function Header() {
+const Header = props => {
+  const { location } = props;
   return (
-    <ul>
-      <li>
-        <Link to="/">Home</Link>
-      </li>
-      <li>
-        <Link to="/browse">Browse</Link>
-      </li>
-    </ul>
+    <Navbar bg="light" variant="light">
+      <Navbar.Brand href="/">Pengawasan Hotel / Logo</Navbar.Brand>
+      <Nav className="ml-auto" activeKey={location.pathname}>
+        <Nav.Item>
+          <Nav.Link href="/">Dashboard</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href="/browse">Input</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href="login">Logout</Nav.Link> {/* call logout function */}
+        </Nav.Item>
+      </Nav>
+    </Navbar>
   );
 }
+
+const HeaderWithRouter = withRouter(Header);
 
 export default App;
