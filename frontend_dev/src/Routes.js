@@ -4,7 +4,6 @@ import Dashboard from "./containers/Dashboard";
 import Input from "./containers/Input";
 import Login from "./containers/Login";
 
-
 export default () =>
   <Switch>
     <Route exact path="/" component={Dashboard} />
