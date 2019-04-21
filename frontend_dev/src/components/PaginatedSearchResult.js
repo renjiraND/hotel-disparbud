@@ -2,8 +2,8 @@ import React from "react";
 import { Table, Pagination } from "react-bootstrap";
 
 export default function PaginatedSearchResult(props) {
-  const rows = props.data.map((row) =>
-    <tr>
+  const rows = props.data.map((row, index) =>
+    <tr key={index}>
       <td>{row.name}</td>
       <td>{row.address}</td>
       <td>{row.star}</td>
@@ -14,7 +14,13 @@ export default function PaginatedSearchResult(props) {
   let pages = [];
   for (let i = 1; i <= props.numPages; i++) {
     pages.push(
-      <Pagination.Item key={i} active={i === props.currPage}>
+      <Pagination.Item 
+        key={i} 
+        active={i === props.currPage}
+        onClick={() => {
+          props.onPageChange(i);
+        }}
+      >
         {i}
       </Pagination.Item>,
     );
