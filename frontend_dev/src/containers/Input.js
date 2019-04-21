@@ -1,33 +1,90 @@
-import React from "react";
-import { BrowserRouter as Route, Link } from "react-router-dom";
+import React, { Component } from "react";
+import { Form, Button, Row, Col } from "react-bootstrap";
 
-function Hotel({ match }) {
-  return <h3>Requested hotel id: {match.params.id}</h3>;
-}
+export default class SearchForm extends Component {
+  constructor(props) {
+      super(props);
 
-export default function Input({ match }) {
-  return (
-    <div>
-      <h2>Browse Hotels</h2>
+      this.state = {
+        name: "",
+        address: "",
+        username: "",
+        password: ""
+      };
+  }
 
-      <ul>
-        <li>
-          <Link to={`${match.url}/hotels/0`}>Hotel 0</Link>
-        </li>
-        <li>
-          <Link to={`${match.url}/hotels/1`}>Hotel 1</Link>
-        </li>
-        <li>
-          <Link to={`${match.url}/hotels/2`}>Hotel 2</Link>
-        </li>
-      </ul>
+  handleSubmit = () => {
+    alert("huyu " 
+      + this.state.name + " " 
+      + this.state.address + " " 
+      + this.state.username + " " 
+      + this.state.password);
+  }
 
-      <Route path={`${match.path}/hotels/:id`} component={Hotel} />
-      <Route
-        exact
-        path={match.path}
-        render={() => <h3>Please select a hotel.</h3>}
-      />
-    </div>
-  );
+  render() {
+    return (
+      <React.Fragment>
+        <Form
+          onSubmit={this.handleSubmit}
+        >
+          <Form.Group as={Row} controlId="formHorizontalEmail">
+            <Form.Label column sm={2}>
+              Nama Hotel
+            </Form.Label>
+            <Col sm={6}>
+              <Form.Control 
+                type="text" placeholder="Nama Hotel"
+                onChange={(event) => {this.setState({name: event.target.value});}}
+              />
+            </Col>
+          </Form.Group>
+
+          <Form.Group as={Row} controlId="formHorizontalPassword">
+            <Form.Label column sm={2}>
+              Alamat
+            </Form.Label>
+            <Col sm={6}>
+              <Form.Control 
+                type="text" placeholder="Alamat" 
+                onChange={(event) => {this.setState({address: event.target.value});}}
+              />
+            </Col>
+          </Form.Group>
+
+          <Form.Group as={Row} controlId="formHorizontalEmail">
+            <Form.Label column sm={2}>
+              Username
+            </Form.Label>
+            <Col sm={6}>
+              <Form.Control 
+                type="text" placeholder="Username" 
+                onChange={(event) => {this.setState({username: event.target.value});}}
+              />
+            </Col>
+          </Form.Group>
+
+          <Form.Group as={Row} controlId="formHorizontalPassword">
+            <Form.Label column sm={2}>
+              Password
+            </Form.Label>
+            <Col sm={6}>
+              <Form.Control 
+                type="password" placeholder="Password" 
+                onChange={(event) => {this.setState({password: event.target.value});}}
+              />
+            </Col>
+          </Form.Group>
+
+          <Form.Group as={Row}>
+            <Col sm={2} />
+            <Col sm={10} className="d-flex justify-content-end">
+              <Button variant="primary" type="submit">
+                Submit
+              </Button>
+            </Col>
+          </Form.Group>
+        </Form>
+      </React.Fragment>
+    );
+  }
 }

@@ -6,7 +6,7 @@ export default class SearchForm extends Component {
       super(props);
 
       this.state = {
-          query: ""
+        query: ""
       };
   }
 
@@ -18,25 +18,23 @@ export default class SearchForm extends Component {
             this.props.onSubmit(this.state.query);
           }}
         >
-          <Form.Group controlId="formGroupSearch">
-            <Row>
-              <Col sm={8}>
-                <Form.Control 
-                  type="text" size="lg" placeholder="Cari Hotel" 
-                  onChange={(event) => {this.setState({query: event.target.value});}}
-                />
-              </Col>
-              <Col sm={2} className="d-flex justify-content-center">
-                <Button variant="primary" type="submit" size="lg">
-                  Search
-                </Button>
-              </Col>
-              <Col sm={2} className="d-flex justify-content-left">
-                <Button variant="primary" size="lg">
-                  Add Filter
-                </Button>
-              </Col>
-            </Row>
+          <Form.Group as={Row} controlId="formGroupSearch">
+            <Col sm={8}>
+              <Form.Control 
+                type="text" size="lg" placeholder="Cari Hotel" 
+                onChange={(event) => {this.setState({query: event.target.value});}}
+              />
+            </Col>
+            <Col sm={2} className="d-flex justify-content-center">
+              <Button variant="primary" type="submit" size="lg">
+                Search
+              </Button>
+            </Col>
+            <Col sm={2} className="d-flex justify-content-start">
+              <Button variant="primary" size="lg">
+                Add Filter
+              </Button>
+            </Col>
           </Form.Group>
         </Form>
       </React.Fragment>
