@@ -24,6 +24,9 @@ export default class SearchForm extends Component {
   render() {
     return (
       <React.Fragment>
+        <h1>Input Data Hotel</h1>
+        <hr />
+        <br />
         <Form
           onSubmit={this.handleSubmit}
         >
@@ -34,7 +37,7 @@ export default class SearchForm extends Component {
             <Col sm={6}>
               <Form.Control 
                 type="text" placeholder="Nama Hotel"
-                onChange={(event) => {this.setState({name: event.target.value});}}
+                onChange={(event) => {this.setState({ name: event.target.value });}}
               />
             </Col>
           </Form.Group>
@@ -46,7 +49,7 @@ export default class SearchForm extends Component {
             <Col sm={6}>
               <Form.Control 
                 type="text" placeholder="Alamat" 
-                onChange={(event) => {this.setState({address: event.target.value});}}
+                onChange={(event) => {this.setState({ address: event.target.value });}}
               />
             </Col>
           </Form.Group>
@@ -58,7 +61,7 @@ export default class SearchForm extends Component {
             <Col sm={6}>
               <Form.Control 
                 type="text" placeholder="Username" 
-                onChange={(event) => {this.setState({username: event.target.value});}}
+                onChange={(event) => {this.setState({ username: event.target.value });}}
               />
             </Col>
           </Form.Group>
@@ -70,7 +73,7 @@ export default class SearchForm extends Component {
             <Col sm={6}>
               <Form.Control 
                 type="password" placeholder="Password" 
-                onChange={(event) => {this.setState({password: event.target.value});}}
+                onChange={(event) => {this.setState({ password: event.target.value });}}
               />
             </Col>
           </Form.Group>
