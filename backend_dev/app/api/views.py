@@ -89,3 +89,29 @@ def customer_login(request):
     }
 
     return Response(data=data, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+def search(request):
+    data = request.data
+
+    filter_obj = {}
+    if data.get('name', None) is not None:
+        filter_obj['name__icontains'] = data['name']
+    if data.get('district', None) is not None:
+        filter_obj['district'] = data['district']
+    if data.get('star', None) is not None:
+        filter_obj['star'] = data['star']
+
+    hotels = Hotel.objects.filter(**filter_obj)
+
+    hotels = [{
+        'name': hotel.name,
+        'address': hotel.address,
+        'star': hotel.star,
+        'owner': hotel.owner,
+        'cert_start': hotel.cert_start,
+        'cert_end': hotel.cert_end
+    } for hotel in hotels]
+
+    return Response(data={'hotels': hotels}, status=status.HTTP_200_OK)
+
