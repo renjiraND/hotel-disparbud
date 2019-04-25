@@ -145,3 +145,10 @@ REST_FRAMEWORK = {
 
 AUTH_USER_MODEL = 'api.User'
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = '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'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
