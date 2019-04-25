@@ -94,11 +94,6 @@ def customer_login(request):
 def search(request):
     query_params = request.query_params
 
-    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-    print('query_params')
-    print(query_params)
-    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-
     filter_obj = {}
     if query_params.get('name', None) is not None and len(query_params['name']) > 0:
         filter_obj['name__icontains'] = query_params['name']
@@ -106,11 +101,6 @@ def search(request):
         filter_obj['district'] = query_params['district']
     if query_params.get('star', None) is not None and len(query_params['star']) > 0:
         filter_obj['star'] = int(query_params['star'])
-
-    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-    print('filter_obj')
-    print(filter_obj)
-    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
 
     hotels = Hotel.objects.filter(**filter_obj)
 

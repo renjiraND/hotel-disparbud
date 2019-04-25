@@ -141,12 +141,7 @@ class HotelTest(ClientTest):
 
 	def test_search_hotel(self):
 		self.populate_hotels()
-
-		search_payload = {
-			'name': 'hotel',
-			'star': 5
-		}
-		response = self.client.post('/search/', search_payload, format='json')
+		response = self.client.get('/search/?name=hotel&star=5')
 		self.assertEqual(response.status_code, status.HTTP_200_OK, 'is should return 200 status code')
 		num_of_matched_hotels = len(response.data['hotels'])
 		self.assertEqual(num_of_matched_hotels, 1, 'is should return 1 matched hotel')
