@@ -61,4 +61,108 @@ Authentication: Token f566e5cc736589103a1938de4fa059ad190f89b7
 
 
 ## Hotel
-#### readmenya ntaran
+#### Get all hotels
+```
+GET '/hotels/'
+```
+Sample response
+```
+{
+    "count": 2,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "id": 1,
+            "name": "Hotel Harris",
+            "district": "Coblog",
+            "address": "Pokoknya di Coblong",
+            "star": 5,
+            "owner": "Ijuan",
+            "cert_start": "12:12:00",
+            "cert_end": "23:12:00"
+        },
+        {
+            "id": 2,
+            "name": "Hotel Fairmont",
+            "district": "Coblong",
+            "address": "Pokoknya di Coblong",
+            "star": 2,
+            "owner": "Ijuan",
+            "cert_start": "12:12:00",
+            "cert_end": "23:12:00"
+        }
+    ]
+}
+```
+
+#### Get one hotel
+```
+GET '/hotels/<id>/'
+```
+Sample response
+```
+{
+    "id": 1,
+    "name": "Hotel Harris",
+    "district": "Coblog",
+    "address": "Pokoknya di Coblong",
+    "star": 5,
+    "owner": "Ijuan",
+    "cert_start": "12:12:00",
+    "cert_end": "23:12:00"
+}
+```
+
+#### Add hotel
+```
+POST '/hotels/'
+{
+    "name": "Hotel Tralala",
+    "district": "Cimbel",
+    "address": "depan Unpar",
+    "star": 1,
+    "owner": "Felipe",
+    "cert_start": "12:12:00",
+    "cert_end": "23:12:00"
+}
+```
+Sample response
+```
+{
+    "id": 3,
+    "name": "Hotel Tralala",
+    "district": "Cimbel",
+    "address": "depan Unpar",
+    "star": 1,
+    "owner": "Felipe",
+    "cert_start": "12:12:00",
+    "cert_end": "23:12:00"
+}
+```
+
+#### Search hotel
+Every field is optional, for name field the search is case insensitive
+```
+POST '/search/'
+{
+    "name": "hotel",
+    "district": "Coblog",
+    "star": 5,
+}
+```
+Sample response
+```
+{
+    "hotels": [
+        {
+            "name": "Hotel Harris",
+            "address": "Pokoknya di Coblong",
+            "star": 5,
+            "owner": "Ijuan",
+            "cert_start": "12:12:00",
+            "cert_end": "23:12:00"
+        }
+    ]
+}
+```
