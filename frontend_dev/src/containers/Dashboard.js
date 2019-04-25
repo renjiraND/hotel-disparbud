@@ -1,7 +1,7 @@
 import React, { Component } from "react";
+import axios from "axios";
 import SearchForm from "./SearchForm";
 import PaginatedSearchResult from "../components/PaginatedSearchResult";
-import axios from "axios";
 import { config } from "../config";
 
 export default class Dashboard extends Component {
@@ -18,18 +18,18 @@ export default class Dashboard extends Component {
       };
 
       axios.get(this.getSearchUrl(this.state.currPage + 1))
-         .then(response => {
-            if (response.status !== 200) {
-              alert("error bos!");
-            } else {
-              this.setState({
-                query: "",
-                data: response.data.hotels,
-                currPage: 0,
-                numPages: response.data.max_pages
-              })
-            }
-         })
+        .then(response => {
+          if (response.status !== 200) {
+            alert("error bos!");
+          } else {
+            this.setState({
+              query: "",
+              data: response.data.hotels,
+              currPage: 0,
+              numPages: response.data.max_pages
+            })
+          }
+        });
   }
 
   getSearchUrl(page, name, district, star) {
@@ -79,20 +79,20 @@ export default class Dashboard extends Component {
       star = '';
     }
     axios.get(this.getSearchUrl(this.state.currPage + 1, query, district, star))
-         .then(response => {
-            if (response.status !== 200) {
-              alert("search error bos!");
-            } else {
-              this.setState({
-                query: query,
-                district: district,
-                star: star,
-                data: response.data.hotels,
-                currPage: 0,
-                numPages: response.data.max_pages
-              })
-            }
-         })
+      .then(response => {
+        if (response.status !== 200) {
+          alert("search error bos!");
+        } else {
+          this.setState({
+            query: query,
+            district: district,
+            star: star,
+            data: response.data.hotels,
+            currPage: 0,
+            numPages: response.data.max_pages
+          })
+        }
+      });
   }
 
   handlePageChange = (index) => {

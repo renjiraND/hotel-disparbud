@@ -12,12 +12,12 @@ export default class SearchFilterModal extends Component {
 
       this.cities = [
         "Semua", "Kota Bandung", "Kabupaten Bandung"
-      ]
+      ];
 
       this.stars = [
         // "Non-Bintang", "1", "2", "3", "4", "5"
         "Semua", "1", "2", "3", "4", "5"
-      ]
+      ];
   }
 
   handleHide = () => {
@@ -55,7 +55,7 @@ export default class SearchFilterModal extends Component {
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group as={Row} controlId="formHorizontalEmail">
+            <Form.Group as={Row} controlId="formDistrictField">
               <Col sm={1} />
               <Form.Label column sm={3}>
                 Kabupaten/Kota
@@ -70,7 +70,7 @@ export default class SearchFilterModal extends Component {
               </Col>
             </Form.Group>
 
-            <Form.Group as={Row} controlId="formHorizontalPassword">
+            <Form.Group as={Row} controlId="formStarField">
               <Col sm={1} />
               <Form.Label column sm={3}>
                 Bintang
