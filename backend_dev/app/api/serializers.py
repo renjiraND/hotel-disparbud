@@ -19,7 +19,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class HotelSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Hotel
-        fields = ('name', 'district', 'address', 'star', 'owner', 'cert_start', 'cert_end')
+        fields = ('id', 'name', 'district', 'address', 'star', 'owner', 'cert_start', 'cert_end')
 
 def create_and_save_user(validated_data):
     name = validated_data['name']
