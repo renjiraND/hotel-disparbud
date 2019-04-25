@@ -90,19 +90,45 @@ def customer_login(request):
 
     return Response(data=data, status=status.HTTP_200_OK)
 
-@api_view(['POST'])
+@api_view(['GET'])
 def search(request):
-    data = request.data
+    query_params = request.query_params
+
+    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+    print('query_params')
+    print(query_params)
+    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
 
     filter_obj = {}
-    if data.get('name', None) is not None:
-        filter_obj['name__icontains'] = data['name']
-    if data.get('district', None) is not None:
-        filter_obj['district'] = data['district']
-    if data.get('star', None) is not None:
-        filter_obj['star'] = data['star']
+    if query_params.get('name', None) is not None and len(query_params['name']) > 0:
+        filter_obj['name__icontains'] = query_params['name']
+    if query_params.get('district', None) is not None and len(query_params['district']) > 0:
+        filter_obj['district'] = query_params['district']
+    if query_params.get('star', None) is not None and len(query_params['star']) > 0:
+        filter_obj['star'] = int(query_params['star'])
+
+    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+    print('filter_obj')
+    print(filter_obj)
+    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
 
     hotels = Hotel.objects.filter(**filter_obj)
+
+    PAGE_SIZE = 10
+    max_pages = (len(hotels) + PAGE_SIZE - 1) // PAGE_SIZE
+    page_num = None
+
+    if 'page' in query_params and len(query_params['page']) > 0:
+        PAGE_SIZE = 10
+        page_num = int(query_params['page'])
+
+        if page_num <= 0 or page_num > max_pages:
+            payload = {
+                'message': 'page number invalid'
+            }
+            return Response(data=payload, status=status.HTTP_400_BAD_REQUEST)
+
+        hotels = hotels[((page_num - 1) * PAGE_SIZE):(page_num * PAGE_SIZE)]
 
     hotels = [{
         'name': hotel.name,
@@ -113,5 +139,10 @@ def search(request):
         'cert_end': hotel.cert_end
     } for hotel in hotels]
 
-    return Response(data={'hotels': hotels}, status=status.HTTP_200_OK)
+    payload = {
+        'max_pages': max_pages,
+        'hotels': hotels
+    }
+
+    return Response(data=payload, status=status.HTTP_200_OK)
 
