@@ -122,6 +122,7 @@ def search(request):
 
     hotels = [{
         'name': hotel.name,
+        'district': hotel.district,
         'address': hotel.address,
         'star': hotel.star,
         'owner': hotel.owner,
