@@ -11,37 +11,67 @@ export default class Dashboard extends Component {
       this.state = {
         query: "",
         data: [],
-        // data: [
-        //   {
-        //     name: "Hotel 1",
-        //     address: "Jalan 1",
-        //     star: "5",
-        //     owner: "Bapak 1"
-        //   },
-        //   {
-        //     name: "Hotel 2",
-        //     address: "Jalan 2",
-        //     star: "5",
-        //     owner: "Bapak 2"
-        //   },
-        //   {
-        //     name: "Hotel 3",
-        //     address: "Jalan 3",
-        //     star: "5",
-        //     owner: "Bapak 3"
-        //   }
-        // ],
         currPage: 0,
-        numPages: 10
+        numPages: 1
       };
-      // var query = 'hotel';
-  }
 
-  handleSearch = (query) => {
-    axios.get(`${config.apiBaseUrl}/search/?name=${query}`)
+      axios.get(this.getSearchUrl())
          .then(response => {
             if (response.status !== 200) {
-              alert('search error bos!');
+              alert("error bos!");
+            } else {
+              this.setState({
+                query: "",
+                data: response.data.hotels,
+                currPage: 0,
+                numPages: response.data.max_pages
+              })
+            }
+         })
+  }
+
+  getSearchUrl(name, district, star) {
+    let url = `${config.apiBaseUrl}/search/?`;
+    let firstParam = true;
+
+    if (!!name) {
+      if (!firstParam) {
+        url += '&';
+      }
+      firstParam = false;
+      url += `name=${name}`;
+    }
+
+    if (!!district) {
+      if (!firstParam) {
+        url += '&';
+      }
+      firstParam = false;
+      url += `district=${district}`;
+    }
+
+    if (!!star) {
+      if (!firstParam) {
+        url += '&';
+      }
+      firstParam = false;
+      url += `star=${star}`;
+    }
+    console.log(url);
+    return url;
+  }
+
+  handleSearch = (query, district, star) => {
+    if (district === 'Semua') {
+      district = '';
+    }
+    if (star === 'Semua') {
+      star = '';
+    }
+    axios.get(this.getSearchUrl(query, district, star))
+         .then(response => {
+            if (response.status !== 200) {
+              alert("search error bos!");
             } else {
               this.setState({
                 query: query,
@@ -51,15 +81,6 @@ export default class Dashboard extends Component {
               })
             }
          })
-    // this.setState({ query: query, currPage: 0 });
-    // alert("search " + query);
-
-    // TODO: request query at page 0
-    // axios.get(`https://jsonplaceholder.typicode.com/users`)
-    //   .then(res => {
-    //     const persons = res.data;
-    //     this.setState({ persons });
-    //   })
   }
 
   handlePageChange = (index) => {

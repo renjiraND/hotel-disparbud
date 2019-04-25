@@ -9,8 +9,8 @@ export default class SearchForm extends Component {
       this.state = {
         query: "",
         filter: {
-          city: "",
-          star: 3
+          city: "Semua",
+          star: "Semua"
         },
         showFilter: false
       };
@@ -26,7 +26,10 @@ export default class SearchForm extends Component {
         <Form
           onSubmit={(e) => {
             e.preventDefault();
-            this.props.onSubmit(this.state.query);
+            const query = this.state.query;
+            const district = this.state.filter.city;
+            const star = this.state.filter.star;
+            this.props.onSubmit(query, district, star);
           }}
         >
           <Form.Group as={Row} controlId="formGroupSearch">

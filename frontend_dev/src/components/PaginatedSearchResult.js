@@ -5,6 +5,7 @@ export default function PaginatedSearchResult(props) {
   const rows = props.data.map((row, index) =>
     <tr key={index}>
       <td>{row.name}</td>
+      <td>{row.district}</td>
       <td>{row.address}</td>
       <td>{row.star}</td>
       <td>{row.owner}</td>
@@ -32,6 +33,7 @@ export default function PaginatedSearchResult(props) {
         <thead>
           <tr>
             <th>Nama</th>
+            <th>Kabupaten / Kota</th>
             <th>Alamat</th>
             <th>Bintang</th>
             <th>Owner</th>

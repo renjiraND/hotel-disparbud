@@ -6,16 +6,17 @@ export default class SearchFilterModal extends Component {
       super(props);
 
       this.state = {
-        city: "",
-        star: "3"
+        city: "Semua",
+        star: "Semua"
       };
 
       this.cities = [
-        "Kota Bandung", "Kabupaten Bandung"
+        "Semua", "Kota Bandung", "Kabupaten Bandung"
       ]
 
       this.stars = [
-        "Non-Bintang", "1", "2", "3", "4", "5"
+        // "Non-Bintang", "1", "2", "3", "4", "5"
+        "Semua", "1", "2", "3", "4", "5"
       ]
   }
 
