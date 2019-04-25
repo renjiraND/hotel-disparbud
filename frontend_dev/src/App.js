@@ -1,62 +1,8 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 import { Navbar,Nav } from "react-bootstrap";
 import Routes from "./Routes";
 import { withRouter } from "react-router"
-
-
-function App() {
-  return (
-    <Router>
-      <div>
-        <HeaderWithRouter />
-        <div className="container">
-          <Routes/>
-        </div>
-      </div>
-    </Router>
-  );
-}
-
-// export function Home() {
-//   return (
-//     <div>
-//       <h2>Home</h2>
-//       Welcome to Disparbud Hotel Data Center!
-//     </div>
-//   );
-// }
-
-// function Hotel({ match }) {
-//   return <h3>Requested hotel id: {match.params.id}</h3>;
-// }
-
-// export function Browse({ match }) {
-//   return (
-//     <div>
-//       <h2>Browse Hotels</h2>
-
-//       <ul>
-//         <li>
-//           <Link to={`${match.url}/hotels/0`}>Hotel 0</Link>
-//         </li>
-//         <li>
-//           <Link to={`${match.url}/hotels/1`}>Hotel 1</Link>
-//         </li>
-//         <li>
-//           <Link to={`${match.url}/hotels/2`}>Hotel 2</Link>
-//         </li>
-//       </ul>
-
-//       <Route path={`${match.path}/hotels/:id`} component={Hotel} />
-//       <Route
-//         exact
-//         path={match.path}
-//         render={() => <h3>Please select a hotel.</h3>}
-//       />
-//     </div>
-//   );
-// }
 
 const Header = props => {
   const { location } = props;
@@ -80,4 +26,21 @@ const Header = props => {
 
 const HeaderWithRouter = withRouter(Header);
 
-export default App;
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <Router>
+        <div>
+          <HeaderWithRouter />
+          <div className="container">
+            <Routes/>
+          </div>
+        </div>
+      </Router>
+    );
+  }
+}
