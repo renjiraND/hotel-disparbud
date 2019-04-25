@@ -111,13 +111,6 @@ def search(request):
     if 'page' in query_params and len(query_params['page']) > 0:
         PAGE_SIZE = 10
         page_num = int(query_params['page'])
-
-        if page_num <= 0 or page_num > max_pages:
-            payload = {
-                'message': 'page number invalid'
-            }
-            return Response(data=payload, status=status.HTTP_400_BAD_REQUEST)
-
         hotels = hotels[((page_num - 1) * PAGE_SIZE):(page_num * PAGE_SIZE)]
 
     hotels = [{
