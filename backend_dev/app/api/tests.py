@@ -70,8 +70,8 @@ class HotelTest(ClientTest):
 	            "address": "Pokoknya di Coblong",
 	            "star": 5,
 	            "owner": "Ijuan",
-	            "cert_start": "12:12:00",
-	            "cert_end": "23:12:00"
+	            "cert_start": "2019-12-03",
+	            "cert_end": "2019-12-03"
 	        },
 	        {
 	            "id": 2,
@@ -80,8 +80,8 @@ class HotelTest(ClientTest):
 	            "address": "Pokoknya di Coblong",
 	            "star": 2,
 	            "owner": "Ijuan",
-	            "cert_start": "12:12:00",
-	            "cert_end": "23:12:00"
+	            "cert_start": "2019-12-03",
+	            "cert_end": "2019-12-03"
 	        },
 	        {
 	            "id": 3,
@@ -90,8 +90,8 @@ class HotelTest(ClientTest):
 	            "address": "depan Unpar",
 	            "star": 1,
 	            "owner": "Felipe",
-	            "cert_start": "12:12:00",
-	            "cert_end": "23:12:00"
+	            "cert_start": "2019-12-03",
+	            "cert_end": "2019-12-03"
 	        }
 		]
 		for hotel in hotels:
@@ -128,8 +128,8 @@ class HotelTest(ClientTest):
             "address": "Pokoknya di Coblong",
             "star": 5,
             "owner": "Ijuan",
-            "cert_start": "12:12:00",
-            "cert_end": "23:12:00"
+            "cert_start": "2019-12-03",
+            "cert_end": "2019-12-03"
 		}
 		response = self.client.post('/hotels/', hotel_payload, format='json')
 		self.assertEqual(response.status_code, status.HTTP_201_CREATED, 'is should return 201 status code')
