@@ -8,6 +8,7 @@ function App() {
     <Router>
       <div>
         <NavBarWithRouter />
+        <br />
         <div className="container">
           <Routes/>
         </div>

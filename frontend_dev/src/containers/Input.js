@@ -108,7 +108,7 @@ export default class SearchForm extends Component {
             <Col sm={4}>
               <Form.Control 
                 as="select"
-                defaultValue="1"
+                defaultValue={this.state.star}
                 onChange={(event) => {this.setState({ star: event.target.value });}}
               >
                 {starOptions}

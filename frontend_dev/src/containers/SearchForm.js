@@ -9,15 +9,15 @@ export default class SearchForm extends Component {
       this.state = {
         query: "",
         filter: {
-          city: "Semua",
+          district: "Semua",
           star: "Semua"
         },
         showFilter: false
       };
   }
 
-  handleFilterChange = (city, star) => {
-    this.setState({ filter: { city: city, star: star } });
+  handleFilterChange = (district, star) => {
+    this.setState({ filter: { district: district, star: star } });
   }
 
   render() {
@@ -27,7 +27,7 @@ export default class SearchForm extends Component {
           onSubmit={(e) => {
             e.preventDefault();
             const query = this.state.query;
-            const district = this.state.filter.city;
+            const district = this.state.filter.district;
             const star = this.state.filter.star;
             this.props.onSubmit(query, district, star);
           }}
