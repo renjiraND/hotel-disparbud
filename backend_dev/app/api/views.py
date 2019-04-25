@@ -121,6 +121,7 @@ def search(request):
         hotels = hotels[((page_num - 1) * PAGE_SIZE):(page_num * PAGE_SIZE)]
 
     hotels = [{
+        'id': hotel.id,
         'name': hotel.name,
         'district': hotel.district,
         'address': hotel.address,
