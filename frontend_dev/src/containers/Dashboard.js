@@ -10,12 +10,14 @@ export default class Dashboard extends Component {
 
       this.state = {
         query: "",
+        district: "",
+        star: "",
         data: [],
         currPage: 0,
         numPages: 1
       };
 
-      axios.get(this.getSearchUrl())
+      axios.get(this.getSearchUrl(this.state.currPage + 1))
          .then(response => {
             if (response.status !== 200) {
               alert("error bos!");
@@ -30,9 +32,17 @@ export default class Dashboard extends Component {
          })
   }
 
-  getSearchUrl(name, district, star) {
+  getSearchUrl(page, name, district, star) {
     let url = `${config.apiBaseUrl}/search/?`;
     let firstParam = true;
+
+    if (!!page) {
+      if (!firstParam) {
+        url += '&';
+      }
+      firstParam = false;
+      url += `page=${page}`;
+    }
 
     if (!!name) {
       if (!firstParam) {
@@ -57,7 +67,7 @@ export default class Dashboard extends Component {
       firstParam = false;
       url += `star=${star}`;
     }
-    console.log(url);
+
     return url;
   }
 
@@ -68,13 +78,15 @@ export default class Dashboard extends Component {
     if (star === 'Semua') {
       star = '';
     }
-    axios.get(this.getSearchUrl(query, district, star))
+    axios.get(this.getSearchUrl(this.state.currPage + 1, query, district, star))
          .then(response => {
             if (response.status !== 200) {
               alert("search error bos!");
             } else {
               this.setState({
                 query: query,
+                district: district,
+                star: star,
                 data: response.data.hotels,
                 currPage: 0,
                 numPages: response.data.max_pages
@@ -84,15 +96,27 @@ export default class Dashboard extends Component {
   }
 
   handlePageChange = (index) => {
-    this.setState({ currPage: index });
-    // alert("req page " + index);
-
-    // TODO: req query at page index
-    // axios.get(`https://jsonplaceholder.typicode.com/users`)
-    //   .then(res => {
-    //     const persons = res.data;
-    //     this.setState({ persons });
-    //   })
+    this.setState({ currPage: index }, () => {
+      const page = this.state.currPage + 1;
+      const query = this.state.query;
+      const district = this.state.district;
+      const star = this.state.star;
+      axios.get(this.getSearchUrl(page, query, district, star))
+         .then(response => {
+            if (response.status !== 200) {
+              alert("search error bos!");
+            } else {
+              this.setState({
+                query: query,
+                district: district,
+                star: star,
+                data: response.data.hotels,
+                currPage: index,
+                numPages: response.data.max_pages
+              })
+            }
+         })
+    });
   }
 
   render() {

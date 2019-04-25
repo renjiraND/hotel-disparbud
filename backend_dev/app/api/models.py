@@ -12,5 +12,5 @@ class Hotel(models.Model):
     address = models.CharField(max_length=200, blank=True, null=True)
     star = models.IntegerField()
     owner = models.CharField(max_length=100, blank=True, null=True)
-    cert_start = models.TimeField()
-    cert_end = models.TimeField()
+    cert_start = models.TimeField(null=True)
+    cert_end = models.TimeField(null=True)
