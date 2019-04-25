@@ -64,6 +64,7 @@ Authentication: Token f566e5cc736589103a1938de4fa059ad190f89b7
 #### Get all hotels
 ```
 GET '/hotels/'
+GET '/hotels/?page=1'
 ```
 Sample response
 ```
@@ -142,18 +143,14 @@ Sample response
 ```
 
 #### Search hotel
-Every field is optional, for name field the search is case insensitive
+Available query param are name, district, star, page. Every query param is optional, for name field the search is case insensitive.
 ```
-POST '/search/'
-{
-    "name": "hotel",
-    "district": "Coblog",
-    "star": 5,
-}
+POST '/search/?name=hotel&district=Coblog&star=5&page=1'
 ```
 Sample response
 ```
 {
+	"max_pages": 1,
     "hotels": [
         {
             "name": "Hotel Harris",
