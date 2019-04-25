@@ -18,7 +18,6 @@ export default class SearchForm extends Component {
 
   handleFilterChange = (city, star) => {
     this.setState({ filter: { city: city, star: star } });
-    alert("filter " + city + " " + star);
   }
 
   render() {
@@ -36,12 +35,12 @@ export default class SearchForm extends Component {
                 onChange={(event) => {this.setState({ query: event.target.value });}}
               />
             </Col>
-            <Col sm={2} className="d-flex justify-content-center">
+            <Col sm={2} className="d-flex justify-content-end">
               <Button variant="primary" type="submit" size="lg">
                 Search
               </Button>
             </Col>
-            <Col sm={2} className="d-flex justify-content-start">
+            <Col sm={2} className="d-flex justify-content-end">
               <Button 
                 variant="primary" size="lg"
                 onClick={() => {this.setState({ showFilter: true });}}

@@ -12,7 +12,7 @@ export default function PaginatedSearchResult(props) {
   );
 
   let pages = [];
-  for (let i = 1; i <= props.numPages; i++) {
+  for (let i = 0; i < props.numPages; i++) {
     pages.push(
       <Pagination.Item 
         key={i} 
@@ -21,7 +21,7 @@ export default function PaginatedSearchResult(props) {
           props.onPageChange(i);
         }}
       >
-        {i}
+        {i + 1}
       </Pagination.Item>,
     );
   }
