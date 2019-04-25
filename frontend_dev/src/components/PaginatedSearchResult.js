@@ -14,8 +14,8 @@ export default function PaginatedSearchResult(props) {
   let pages = [];
   for (let i = 0; i < props.numPages; i++) {
     pages.push(
-      <Pagination.Item 
-        key={i} 
+      <Pagination.Item
+        key={i}
         active={i === props.currPage}
         onClick={() => {
           props.onPageChange(i);

@@ -24,7 +24,8 @@ export default class SearchForm extends Component {
     return (
       <React.Fragment>
         <Form
-          onSubmit={() => {
+          onSubmit={(e) => {
+            e.preventDefault();
             this.props.onSubmit(this.state.query);
           }}
         >
@@ -41,9 +42,11 @@ export default class SearchForm extends Component {
               </Button>
             </Col>
             <Col sm={2} className="d-flex justify-content-end">
-              <Button 
+              <Button
                 variant="primary" size="lg"
-                onClick={() => {this.setState({ showFilter: true });}}
+                onClick={(e) => {
+                  e.preventDefault();
+                  this.setState({ showFilter: true });}}
               >
                 Add Filter
               </Button>

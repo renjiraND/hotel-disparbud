@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import SearchForm from "./SearchForm";
 import PaginatedSearchResult from "../components/PaginatedSearchResult";
-import axios from 'axios';
+import axios from "axios";
+import { config } from "../config";
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -9,34 +10,49 @@ export default class Dashboard extends Component {
 
       this.state = {
         query: "",
-        data: [
-          {
-            name: "Hotel 1",
-            address: "Jalan 1",
-            star: "5",
-            owner: "Bapak 1"
-          },
-          {
-            name: "Hotel 2",
-            address: "Jalan 2",
-            star: "5",
-            owner: "Bapak 2"
-          },
-          {
-            name: "Hotel 3",
-            address: "Jalan 3",
-            star: "5",
-            owner: "Bapak 3"
-          }
-        ],
+        data: [],
+        // data: [
+        //   {
+        //     name: "Hotel 1",
+        //     address: "Jalan 1",
+        //     star: "5",
+        //     owner: "Bapak 1"
+        //   },
+        //   {
+        //     name: "Hotel 2",
+        //     address: "Jalan 2",
+        //     star: "5",
+        //     owner: "Bapak 2"
+        //   },
+        //   {
+        //     name: "Hotel 3",
+        //     address: "Jalan 3",
+        //     star: "5",
+        //     owner: "Bapak 3"
+        //   }
+        // ],
         currPage: 0,
         numPages: 10
       };
+      // var query = 'hotel';
   }
 
   handleSearch = (query) => {
-    this.setState({ query: query, currPage: 0 });
-    alert("search " + query);
+    axios.get(`${config.apiBaseUrl}/search/?name=${query}`)
+         .then(response => {
+            if (response.status !== 200) {
+              alert('search error bos!');
+            } else {
+              this.setState({
+                query: query,
+                data: response.data.hotels,
+                currPage: 0,
+                numPages: response.data.max_pages
+              })
+            }
+         })
+    // this.setState({ query: query, currPage: 0 });
+    // alert("search " + query);
 
     // TODO: request query at page 0
     // axios.get(`https://jsonplaceholder.typicode.com/users`)
@@ -48,7 +64,7 @@ export default class Dashboard extends Component {
 
   handlePageChange = (index) => {
     this.setState({ currPage: index });
-    alert("req page " + index);
+    // alert("req page " + index);
 
     // TODO: req query at page index
     // axios.get(`https://jsonplaceholder.typicode.com/users`)
@@ -61,12 +77,12 @@ export default class Dashboard extends Component {
   render() {
     return (
       <React.Fragment>
-        <SearchForm onSubmit={this.handleSearch}/>
+        {<SearchForm onSubmit={this.handleSearch}/>}
         <br />
-        <PaginatedSearchResult 
-          data={this.state.data} 
+        <PaginatedSearchResult
+          data={this.state.data}
           currPage={this.state.currPage}
-          numPages={this.state.numPages} 
+          numPages={this.state.numPages}
           onPageChange={this.handlePageChange}
         />
       </React.Fragment>
