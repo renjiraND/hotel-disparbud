@@ -51,7 +51,7 @@ export default class SearchFilterModal extends Component {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Add Fliter</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
