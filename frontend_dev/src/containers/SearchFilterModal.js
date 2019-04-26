@@ -6,40 +6,32 @@ export default class SearchFilterModal extends Component {
       super(props);
 
       this.state = {
-        city: "Semua",
+        district: "Semua",
         star: "Semua"
       };
 
       this.cities = [
         "Semua", "Kota Bandung", "Kabupaten Bandung"
-      ]
+      ];
 
       this.stars = [
         // "Non-Bintang", "1", "2", "3", "4", "5"
         "Semua", "1", "2", "3", "4", "5"
-      ]
+      ];
   }
 
   handleHide = () => {
-    this.props.onChange(this.state.city, this.state.star);
+    this.props.onChange(this.state.district, this.state.star);
     this.props.onHide();
   }
 
   render() {
-    const cityOptions = this.cities.map((city) =>
-      city === this.state.city ? (
-        <option selected>{city}</option>
-      ) : (
-        <option>{city}</option>
-      )
+    const districtOptions = this.cities.map((district, index) =>
+      <option key={index}>{district}</option>
     );
 
-    const starOptions = this.stars.map((star) => 
-      star === this.state.star ? (
-        <option selected>{star}</option>
-      ) : (
-        <option>{star}</option>
-      )
+    const starOptions = this.stars.map((star, index) => 
+      <option key={index}>{star}</option>
     );
 
     return (
@@ -55,7 +47,7 @@ export default class SearchFilterModal extends Component {
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group as={Row} controlId="formHorizontalEmail">
+            <Form.Group as={Row} controlId="formDistrictField">
               <Col sm={1} />
               <Form.Label column sm={3}>
                 Kabupaten/Kota
@@ -63,14 +55,15 @@ export default class SearchFilterModal extends Component {
               <Col sm={6}>
                 <Form.Control 
                   as="select"
-                  onChange={(event) => {this.setState({ city: event.target.value });}}
+                  defaultValue={this.state.district}
+                  onChange={(event) => {this.setState({ district: event.target.value });}}
                 >
-                  {cityOptions}
+                  {districtOptions}
                 </Form.Control>
               </Col>
             </Form.Group>
 
-            <Form.Group as={Row} controlId="formHorizontalPassword">
+            <Form.Group as={Row} controlId="formStarField">
               <Col sm={1} />
               <Form.Label column sm={3}>
                 Bintang
@@ -78,6 +71,7 @@ export default class SearchFilterModal extends Component {
               <Col sm={6}>
               <Form.Control 
                 as="select"
+                defaultValue={this.state.star}
                 onChange={(event) => {this.setState({ star: event.target.value });}}
               >
                 {starOptions}
