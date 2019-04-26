@@ -32,8 +32,8 @@ export default class SearchForm extends Component {
       address: this.state.address,
       star: this.state.star,
       owner: this.state.owner,
-      cert_start: this.state.certStart,
-      cert_end: this.state.certEnd
+      cert_start: this.state.certStart + "T00:00:00Z",
+      cert_end: this.state.certEnd + "T00:00:00Z"
     };
 
     axios.post(`${config.apiBaseUrl}/hotels/`, payload)
