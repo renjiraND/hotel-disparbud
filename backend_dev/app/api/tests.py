@@ -128,8 +128,8 @@ class HotelTest(ClientTest):
             "address": "Pokoknya di Coblong",
             "star": 5,
             "owner": "Ijuan",
-            "cert_start": "2019-12-03",
-            "cert_end": "2019-12-03"
+            "cert_start": "2019-12-03T00:00:00Z",
+            "cert_end": "2019-12-03T00:00:00Z"
 		}
 		response = self.client.post('/hotels/', hotel_payload, format='json')
 		self.assertEqual(response.status_code, status.HTTP_201_CREATED, 'is should return 201 status code')
