@@ -32,7 +32,7 @@ def get_near_expired_hotel():
 	from app.api.models import Hotel
 	from app.scripts.cert_notif_job import get_dt_string
 
-	now = datetime.datetime.now()
+	now = datetime.datetime.now() + datetime.timedelta(hours=7)
 	a_week_from_now = now + datetime.timedelta(days=7)
 
 	near_expired_hotels = Hotel.objects.filter(cert_end__gte=now, cert_end__lte=a_week_from_now)
