@@ -3,7 +3,7 @@ import { Table, Pagination } from "react-bootstrap";
 
 export default function PaginatedSearchResult(props) {
   const rows = props.data.map((row, index) =>
-    <tr key={index}>
+    <tr key={index} onClick= { () => { window.location.href = "/detail?id=" + row.id }} >
       <td>{row.name}</td>
       <td>{row.district}</td>
       <td>{row.address}</td>
