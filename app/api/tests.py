@@ -45,7 +45,7 @@ class UserAuthTest(ClientTest):
 		self.populate_user()
 		login_payload = {
 			'email': 'izzan@itb.com',
-			'password': 'hahaha'
+			'password': 'hahahaa'
 		}
 		response = self.client.post('/login/', login_payload, format='json')
 		self.assertEqual(response.status_code, status.HTTP_200_OK, 'is should return 200 status code')
