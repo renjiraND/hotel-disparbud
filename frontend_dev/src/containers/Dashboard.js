@@ -17,9 +17,18 @@ export default class Dashboard extends Component {
         numPages: 1
       };
 
-      axios.get(this.getSearchUrl(this.state.currPage + 1))
+      let request = {
+        url : this.getSearchUrl(this.state.currPage + 1),
+        // headers: {
+        //     'Authentication': 'Token ' + localStorage.getItem("token"),
+        // },
+      }
+
+      axios(request)
         .then(response => {
-          if (response.status !== 200) {
+          if (response.status === 401) {
+            window.location.href = "/login"
+          } else if (response.status !== 200) {
             alert("error bos!");
           } else {
             this.setState({

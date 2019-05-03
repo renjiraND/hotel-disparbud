@@ -5,27 +5,36 @@ import { config } from "../config";
 import querystring from "query-string";
 
 export default class Dashboard extends Component {
-  constructor(props) {
-      super(props);
+    constructor(props) {
+        super(props);
 
-      this.state = {
-        name: "Arya Duta",
-        address: "Jl. Sumatera No. 51",
-        star: "5",
-        owner: "Bapak",
-        cert_end: "10/10/20"
-      };
+        this.state = {
+            name: "Arya Duta",
+            address: "Jl. Sumatera No. 51",
+            star: "5",
+            owner: "Bapak",
+            cert_end: "10/10/20"
+        };
 
-      let id = querystring.parse(this.props.location.search).id;
+        let id = querystring.parse(this.props.location.search).id;
 
-      axios.get( config.apiBaseUrl + "/hotels/" + id)
-        .then(response => {
-          if (response.status !== 200) {
-            alert("error bos!");
-          } else {
-            this.setState(response.data)
-          }
-        });
+        let request = {
+            url : config.apiBaseUrl + "/hotels/" + id,
+            // headers: {
+            //     'Authentication': 'Token ' + localStorage.getItem("token"),
+            // },
+        }
+
+        axios( request )
+            .then(response => {
+                if (response.status === 401) {
+                    window.location.href = "/login"
+                } else if (response.status !== 200) {
+                    alert("error bos!");
+                } else {
+                    this.setState(response.data)
+                }
+            });
   }
   render() {
     return (
