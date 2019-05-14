@@ -17,19 +17,14 @@ export default class Dashboard extends Component {
       numPages: 1
     };
 
-    let config = {
+    const reqConfig = {
       headers: {
-        Authentication: 'Token ' + localStorage.getItem("token"),
-      },
-    }
-
-    axios.get(this.getSearchUrl(this.state.currPage + 1), config)
+        Authentication: 'Token ' + localStorage.getItem("token")
+      }
+    };
+    axios.get(this.getSearchUrl(this.state.currPage + 1), reqConfig)
       .then(response => {
-        if (response.status === 401) {
-          window.location.href = "/login"
-        } else if (response.status !== 200) {
-          alert("error bos!");
-        } else {
+        if (response.status === 200) {
           this.setState({
             query: "",
             data: response.data.hotels,
@@ -37,7 +32,14 @@ export default class Dashboard extends Component {
             numPages: response.data.max_pages
           })
         }
-      });
+      })
+      .catch(error => {
+				if (error.response.status === 401) {
+					window.location.href = "/login";
+				} else {
+					alert("load data hotel error bos!");
+				}
+			});
   }
 
   componentDidMount() {
@@ -92,11 +94,15 @@ export default class Dashboard extends Component {
     if (star === 'Semua') {
       star = '';
     }
-    axios.get(this.getSearchUrl(this.state.currPage + 1, query, district, star))
+
+    const reqConfig = { 
+      headers: {
+        Authentication: 'Token ' + localStorage.getItem("token")
+      } 
+    };
+    axios.get(this.getSearchUrl(this.state.currPage + 1, query, district, star), reqConfig)
       .then(response => {
-        if (response.status !== 200) {
-          alert("search error bos!");
-        } else {
+        if (response.status === 200) {
           this.setState({
             query: query,
             district: district,
@@ -106,7 +112,14 @@ export default class Dashboard extends Component {
             numPages: response.data.max_pages
           })
         }
-      });
+      })
+      .catch(error => {
+				if (error.response.status === 401) {
+					window.location.href = "/login";
+				} else {
+					alert("search error bos!");
+				}
+			});
   }
 
   handlePageChange = (index) => {
@@ -115,11 +128,14 @@ export default class Dashboard extends Component {
       const query = this.state.query;
       const district = this.state.district;
       const star = this.state.star;
-      axios.get(this.getSearchUrl(page, query, district, star))
+      const reqConfig = { 
+        headers: {
+          Authentication: 'Token ' + localStorage.getItem("token")
+        } 
+      };
+      axios.get(this.getSearchUrl(page, query, district, star), reqConfig)
         .then(response => {
-          if (response.status !== 200) {
-            alert("search error bos!");
-          } else {
+          if (response.status === 200) {
             this.setState({
               query: query,
               district: district,
@@ -130,6 +146,13 @@ export default class Dashboard extends Component {
             })
           }
         })
+        .catch(error => {
+          if (error.response.status === 401) {
+            window.location.href = "/login";
+          } else {
+            alert("load data hotel error bos!");
+          }
+        });
     });
   }
 

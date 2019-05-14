@@ -42,14 +42,25 @@ export default class SearchForm extends Component {
       cert_end: this.state.certEnd + "T00:00:00Z"
     };
 
-    axios.post(`${config.apiBaseUrl}/hotels/`, payload)
+    const reqConfig = { 
+      headers: {
+        Authentication: 'Token ' + localStorage.getItem("token")
+      } 
+    };
+    axios.post(`${config.apiBaseUrl}/hotels/`, payload, reqConfig)
       .then(response => {
-        if (response.status !== 201) {
-          alert("nambah hotel error bang!");
-        } else {
+        if (response.status === 201) {
           this.setState({ postSuccess: true })
         }
-      });
+      })
+      .catch(error => {
+				if (error.response.status === 401) {
+          // window.location.href = "/login";
+          console.log(error.response);
+				} else {
+					alert("nambah hotel error bang!");
+				}
+			});
   }
 
   handleSuccessModalHide = () => {
