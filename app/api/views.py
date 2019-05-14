@@ -10,6 +10,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
+from rest_framework.authentication import TokenAuthentication
 
 from app.api.serializers import UserSerializer, RegisterSerializer, HotelSerializer
 from app.api.models import Hotel
@@ -20,6 +21,9 @@ class HotelViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
+    
+    permission_classes = (IsAuthenticated,)
+
     queryset = Hotel.objects.all()
     serializer_class = HotelSerializer
 
@@ -93,6 +97,7 @@ def customer_login(request):
     return Response(data=data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
+@permission_classes((IsAuthenticated,))
 def search(request):
     query_params = request.query_params
 
