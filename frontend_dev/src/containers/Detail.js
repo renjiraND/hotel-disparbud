@@ -21,7 +21,7 @@ export default class Dashboard extends Component {
         let request = {
             url : config.apiBaseUrl + "/hotels/" + id,
             headers: {
-                'Authentication': 'Token ' + localStorage.getItem("token"),
+                'Authorization': 'Token ' + localStorage.getItem("token"),
             },
         }
 
@@ -43,7 +43,7 @@ export default class Dashboard extends Component {
             <Container>
                 <Row>
                     <Col xs={1}>
-                    <Button variant="light">
+                    <Button variant="light" onClick= { () => { window.history.back() }}>
                         <i className="material-icons my-auto">
                             arrow_back
                         </i>
@@ -62,7 +62,12 @@ export default class Dashboard extends Component {
             </Media.Body>
         </Media>
         <Container>
-            <Button className="float-right"> <span>Ubah</span> <i className="material-icons">edit</i></Button>
+            <Button 
+                className="float-right"
+                onClick= { () => { window.location.href = "/edit?id=" + querystring.parse(this.props.location.search).id }}
+            > 
+                <span>Ubah</span> <i className="material-icons">edit</i>
+            </Button>
         </Container>
       </React.Fragment>
     );
