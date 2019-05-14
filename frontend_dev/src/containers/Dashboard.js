@@ -6,39 +6,38 @@ import { config } from "../config";
 
 export default class Dashboard extends Component {
   constructor(props) {
-      super(props);
+    super(props);
 
-      this.state = {
-        query: "",
-        district: "",
-        star: "",
-        data: [],
-        currPage: 0,
-        numPages: 1
-      };
+    this.state = {
+      query: "",
+      district: "",
+      star: "",
+      data: [],
+      currPage: 0,
+      numPages: 1
+    };
 
-      let request = {
-        url : this.getSearchUrl(this.state.currPage + 1),
-        // headers: {
-        //     'Authentication': 'Token ' + localStorage.getItem("token"),
-        // },
-      }
+    let config = {
+      headers: {
+        Authentication: 'Token ' + localStorage.getItem("token"),
+      },
+    }
 
-      axios(request)
-        .then(response => {
-          if (response.status === 401) {
-            window.location.href = "/login"
-          } else if (response.status !== 200) {
-            alert("error bos!");
-          } else {
-            this.setState({
-              query: "",
-              data: response.data.hotels,
-              currPage: 0,
-              numPages: response.data.max_pages
-            })
-          }
-        });
+    axios.get(this.getSearchUrl(this.state.currPage + 1), config)
+      .then(response => {
+        if (response.status === 401) {
+          window.location.href = "/login"
+        } else if (response.status !== 200) {
+          alert("error bos!");
+        } else {
+          this.setState({
+            query: "",
+            data: response.data.hotels,
+            currPage: 0,
+            numPages: response.data.max_pages
+          })
+        }
+      });
   }
 
   getSearchUrl(page, name, district, star) {
@@ -111,27 +110,27 @@ export default class Dashboard extends Component {
       const district = this.state.district;
       const star = this.state.star;
       axios.get(this.getSearchUrl(page, query, district, star))
-         .then(response => {
-            if (response.status !== 200) {
-              alert("search error bos!");
-            } else {
-              this.setState({
-                query: query,
-                district: district,
-                star: star,
-                data: response.data.hotels,
-                currPage: index,
-                numPages: response.data.max_pages
-              })
-            }
-         })
+        .then(response => {
+          if (response.status !== 200) {
+            alert("search error bos!");
+          } else {
+            this.setState({
+              query: query,
+              district: district,
+              star: star,
+              data: response.data.hotels,
+              currPage: index,
+              numPages: response.data.max_pages
+            })
+          }
+        })
     });
   }
 
   render() {
     return (
       <React.Fragment>
-        {<SearchForm onSubmit={this.handleSearch}/>}
+        {<SearchForm onSubmit={this.handleSearch} />}
         <br />
         <PaginatedSearchResult
           data={this.state.data}

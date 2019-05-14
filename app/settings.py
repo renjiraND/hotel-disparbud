@@ -58,7 +58,20 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_HEADERS = (
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'authentication', # tambahan
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+)
 
 ROOT_URLCONF = 'app.urls'
 
@@ -77,6 +90,8 @@ TEMPLATES = [
         },
     },
 ]
+
+print("yeet")
 
 WSGI_APPLICATION = 'app.wsgi.application'
 
