@@ -56,12 +56,12 @@ For every successful register/login, you will get something like this
 
 Use the token in header to use protected endpoints
 ```
-Authentication: Token <TOKEN>
+Authorization: Token <TOKEN>
 ```
 
 Example:
 ```
-Authentication: Token f566e5cc736589103a1938de4fa059ad190f89b7
+Authorization: Token f566e5cc736589103a1938de4fa059ad190f89b7
 ```
 
 
