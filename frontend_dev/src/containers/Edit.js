@@ -10,39 +10,43 @@ export default class Edit extends Component {
     super(props);
 
     this.state = {
-        name: "",
-        district: "",
-        address: "",
-        star: "1",
-        owner: "",
-        cert_start: "",
-        cert_end: "",
-        postSuccess: false
+      name: "",
+      district: "",
+      address: "",
+      star: "1",
+      owner: "",
+      cert_start: "",
+      cert_end: "",
+      postSuccess: false
     };
 
     let id = querystring.parse(this.props.location.search).id;
 
     let request = {
-        url : config.apiBaseUrl + "/hotels/" + id,
-        headers: {
-            'Authorization': 'Token ' + localStorage.getItem("token"),
-        },
+      url : config.apiBaseUrl + "/hotels/" + id,
+      headers: {
+        'Authorization': 'Token ' + localStorage.getItem("token"),
+      },
     }
 
     axios( request )
-        .then(response => {
-            if (response.status === 401) {
-                window.location.href = "/login"
-            } else if (response.status !== 200) {
-                alert("error bos!");
-            } else {
-                this.setState(response.data);
-                // this.setState({
-                //     cert_start: this.cert_start.slice(0,10),
-                //     cert_end: this.cert_end.slice(0,10),
-                // });
-            }
-        });
+      .then(response => {
+        if (response.status === 401) {
+          window.location.href = "/login"
+        } else if (response.status !== 200) {
+          alert("error bos!");
+        } else {
+          this.setState({
+            name: response.data.name,
+            district: response.data.district,
+            address: response.data.address,
+            star: response.data.star,
+            owner: response.data.owner,
+            cert_start: response.data.cert_start.slice(0,10),
+            cert_end: response.data.cert_end.slice(0,10),
+          });
+        }
+      });
 
     this.stars = [
         "1", "2", "3", "4", "5"
