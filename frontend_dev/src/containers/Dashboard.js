@@ -40,6 +40,12 @@ export default class Dashboard extends Component {
       });
   }
 
+  componentDidMount() {
+		if (localStorage.getItem("token") === null) {
+      window.location.href = "/login";
+    }
+	}
+
   getSearchUrl(page, name, district, star) {
     let url = `${config.apiBaseUrl}/search/?`;
     let firstParam = true;

@@ -14,6 +14,10 @@ export default class Login extends Component {
 		};
 	}
 
+	componentDidMount() {
+		localStorage.removeItem('token');
+	}
+
 	validateForm() {
 		return this.state.email.length > 0 && this.state.password.length > 0;
 	}
@@ -26,10 +30,10 @@ export default class Login extends Component {
 
 	handleSubmit = event => {
 		event.preventDefault();
-		// alert("dayum")
 		axios.post(config.apiBaseUrl + '/login/', this.state)
 			.then(response => {
 				if (response.status === 200) {
+					localStorage.setItem('token', response.data.token);
 					window.location.href = "/";
 				}
 			})
@@ -37,7 +41,7 @@ export default class Login extends Component {
 				if (error.response.status === 401) {
 					alert("Email dan/atau password salah")
 				} else {
-					alert("error bos!");
+					alert("login error bos!");
 				}
 			});
 	}

@@ -23,6 +23,12 @@ export default class SearchForm extends Component {
       ];
   }
 
+  componentDidMount() {
+		if (localStorage.getItem("token") === null) {
+      window.location.href = "/login";
+    }
+	}
+
   handleSubmit = (event) => {
     event.preventDefault();
 
