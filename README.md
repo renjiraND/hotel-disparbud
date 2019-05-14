@@ -1,6 +1,8 @@
 # Installation
 
-Using python 3.7 (very important!)
+## Prerequisite
+
+Python 3.7 (very important!)
 
 ## First time run
 ```
@@ -129,8 +131,8 @@ POST '/hotels/'
 	"address": "Rancaengklek",
 	"star": 3,
 	"owner": "Podomoro",
-	"cert_start": "2009-04-27",
-    "cert_end": "2019-04-27"
+	"cert_start": "2019-05-01T00:00:00Z",
+    "cert_end": "2019-05-24T00:00:00Z"
 }
 ```
 Sample response
@@ -144,6 +146,29 @@ Sample response
     "owner": "Podomoro",
     "cert_start": "2009-04-27",
     "cert_end": "2019-04-27"
+}
+```
+
+#### Edit hotel
+```
+PUT '/hotel/<id>'
+PUT '/hotel/27'
+{
+    "name": "Wisma Hotel Bahagia",
+    "district": "Kota Medan",
+}
+```
+Sample response
+```
+{
+    "id": 27,
+    "name": "Wisma Hotel Bahagia",
+    "district": "Kota Medan",
+    "address": "Rancaengklek",
+    "star": 3,
+    "owner": "Podomoro",
+    "cert_start": "2019-05-01T00:00:00Z",
+    "cert_end": "2019-05-10T00:00:00Z"
 }
 ```
 
@@ -164,8 +189,8 @@ Sample response
             "address": "Dago Asri X",
             "star": 5,
             "owner": "Ikhwan",
-            "cert_start": "2018-12-03",
-            "cert_end": "2023-12-03"
+            "cert_start": "2019-05-01T00:00:00Z",
+            "cert_end": "2019-05-01T00:00:00Z"
         }
     ]
 }
