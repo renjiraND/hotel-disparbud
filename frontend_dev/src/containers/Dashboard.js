@@ -4,6 +4,8 @@ import SearchForm from "./SearchForm";
 import PaginatedSearchResult from "../components/PaginatedSearchResult";
 import { config } from "../config";
 import { Redirect } from "react-router"
+import { Row, Col } from "react-bootstrap";
+import NavBarWithRouter from "../components/NavBarWithRouter";
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -161,14 +163,20 @@ export default class Dashboard extends Component {
       <React.Fragment>
         {isUserLoggedIn ? (
           <React.Fragment>
-            <SearchForm onSubmit={this.handleSearch} />
+            <NavBarWithRouter />
             <br />
-            <PaginatedSearchResult
-              data={this.state.data}
-              currPage={this.state.currPage}
-              numPages={this.state.numPages}
-              onPageChange={this.handlePageChange}
-            />
+            <Row className="d-flex justify-content-center">
+              <Col xs={10}>
+                <SearchForm onSubmit={this.handleSearch} />
+                <br />
+                <PaginatedSearchResult
+                  data={this.state.data}
+                  currPage={this.state.currPage}
+                  numPages={this.state.numPages}
+                  onPageChange={this.handlePageChange}
+                />
+              </Col>
+            </Row>
           </React.Fragment>
         ) : (
           <Redirect to="/login"/>
