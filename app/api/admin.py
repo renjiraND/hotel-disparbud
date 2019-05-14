@@ -1,5 +1,8 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 from .models import User, Hotel
 # Register your models here.
-admin.site.register(User)
+class UserAdminPage(UserAdmin):
+    pass
+admin.site.register(User, UserAdminPage)
 admin.site.register(Hotel)
