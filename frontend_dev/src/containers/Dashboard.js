@@ -23,7 +23,7 @@ export default class Dashboard extends Component {
     if (localStorage.getItem("token") !== null) {
       const reqConfig = {
         headers: {
-          Authentication: 'Token ' + localStorage.getItem("token")
+          Authorization: 'Token ' + localStorage.getItem("token")
         }
       };
       axios.get(this.getSearchUrl(this.state.currPage + 1), reqConfig)
@@ -96,7 +96,7 @@ export default class Dashboard extends Component {
 
     const reqConfig = { 
       headers: {
-        Authentication: 'Token ' + localStorage.getItem("token")
+        Authorization: 'Token ' + localStorage.getItem("token")
       } 
     };
     axios.get(this.getSearchUrl(this.state.currPage + 1, query, district, star), reqConfig)
@@ -129,7 +129,7 @@ export default class Dashboard extends Component {
       const star = this.state.star;
       const reqConfig = { 
         headers: {
-          Authentication: 'Token ' + localStorage.getItem("token")
+          Authorization: 'Token ' + localStorage.getItem("token")
         } 
       };
       axios.get(this.getSearchUrl(page, query, district, star), reqConfig)

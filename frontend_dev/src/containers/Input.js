@@ -39,7 +39,7 @@ export default class SearchForm extends Component {
 
     const reqConfig = { 
       headers: {
-        Authentication: 'Token ' + localStorage.getItem("token")
+        Authorization: 'Token ' + localStorage.getItem("token")
       } 
     };
     axios.post(`${config.apiBaseUrl}/hotels/`, payload, reqConfig)
