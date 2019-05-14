@@ -2,27 +2,56 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Form, Button, Row, Col, Modal, Container } from "react-bootstrap";
 import { config } from "../config";
-import { Redirect } from "react-router"
+import { Redirect } from "react-router";
+import querystring from "query-string";
 import NavBarWithRouter from "../components/NavBarWithRouter";
 
-export default class SearchForm extends Component {
+export default class Edit extends Component {
   constructor(props) {
-      super(props);
+    super(props);
 
-      this.state = {
-        name: "",
-        district: "",
-        address: "",
-        star: "1",
-        owner: "",
-        certStart: "",
-        certEnd: "",
-        postSuccess: false
-      };
+    this.state = {
+      name: "",
+      district: "",
+      address: "",
+      star: "1",
+      owner: "",
+      cert_start: "",
+      cert_end: "",
+      postSuccess: false
+    };
 
-      this.stars = [
+    let id = querystring.parse(this.props.location.search).id;
+
+    let request = {
+      url : config.apiBaseUrl + "/hotels/" + id,
+      headers: {
+        'Authorization': 'Token ' + localStorage.getItem("token"),
+      },
+    }
+
+    axios( request )
+      .then(response => {
+        if (response.status === 401) {
+          window.location.href = "/login"
+        } else if (response.status !== 200) {
+          alert("error bos!");
+        } else {
+          this.setState({
+            name: response.data.name,
+            district: response.data.district,
+            address: response.data.address,
+            star: response.data.star,
+            owner: response.data.owner,
+            cert_start: response.data.cert_start.slice(0,10),
+            cert_end: response.data.cert_end.slice(0,10),
+          });
+        }
+      });
+
+    this.stars = [
         "1", "2", "3", "4", "5"
-      ];
+    ];
   }
 
   handleSubmit = (event) => {
@@ -34,8 +63,8 @@ export default class SearchForm extends Component {
       address: this.state.address,
       star: this.state.star,
       owner: this.state.owner,
-      cert_start: this.state.certStart + "T00:00:00Z",
-      cert_end: this.state.certEnd + "T00:00:00Z"
+      cert_start: this.state.cert_start + "T00:00:00Z",
+      cert_end: this.state.cert_end + "T00:00:00Z"
     };
 
     const reqConfig = { 
@@ -43,9 +72,9 @@ export default class SearchForm extends Component {
         Authorization: 'Token ' + localStorage.getItem("token")
       } 
     };
-    axios.post(`${config.apiBaseUrl}/hotels/`, payload, reqConfig)
+    axios.put(`${config.apiBaseUrl}/hotels/${querystring.parse(this.props.location.search).id}/`, payload, reqConfig)
       .then(response => {
-        if (response.status === 201) {
+        if (response.status === 200 || response.status === 204) {
           this.setState({ postSuccess: true })
         }
       })
@@ -53,7 +82,29 @@ export default class SearchForm extends Component {
 				if (error.response.status === 401) {
           window.location.href = "/login";
 				} else {
-					alert("nambah hotel error bang!");
+					alert("edit hotel error bang!");
+				}
+			});
+  }
+
+  handleDelete = (event) => {
+    event.preventDefault();
+    const reqConfig = { 
+      headers: {
+        Authorization: 'Token ' + localStorage.getItem("token")
+      } 
+    };
+    axios.delete(`${config.apiBaseUrl}/hotels/${querystring.parse(this.props.location.search).id}/`, reqConfig)
+      .then(response => {
+        if (response.status === 200 || response.status === 204) {
+          window.location.href = "/";
+        }
+      })
+      .catch(error => {
+				if (error.response.status === 401) {
+          window.location.href = "/login";
+				} else {
+					alert("delete hotel error bang!");
 				}
 			});
   }
@@ -77,7 +128,8 @@ export default class SearchForm extends Component {
             <br />
 
             <Container>
-              <h1>Input Data Hotel</h1>
+
+              <h1>Edit Data Hotel</h1>
               <hr />
               <Form
                 onSubmit={this.handleSubmit}
@@ -91,6 +143,7 @@ export default class SearchForm extends Component {
                       required
                       type="text" placeholder="Nama Hotel"
                       onChange={(event) => {this.setState({ name: event.target.value });}}
+                      value={this.state.name}
                     />
                   </Col>
                 </Form.Group>
@@ -104,6 +157,7 @@ export default class SearchForm extends Component {
                       required
                       type="text" placeholder="Nama Kabupaten/Kota" 
                       onChange={(event) => {this.setState({ district: event.target.value });}}
+                      value={this.state.district}
                     />
                   </Col>
                 </Form.Group>
@@ -117,6 +171,7 @@ export default class SearchForm extends Component {
                       required
                       type="text" placeholder="Alamat" 
                       onChange={(event) => {this.setState({ address: event.target.value });}}
+                      value={this.state.address}
                     />
                   </Col>
                 </Form.Group>
@@ -130,6 +185,7 @@ export default class SearchForm extends Component {
                       as="select"
                       defaultValue={this.state.star}
                       onChange={(event) => {this.setState({ star: event.target.value });}}
+                      value={this.state.star}
                     >
                       {starOptions}
                     </Form.Control>
@@ -145,6 +201,7 @@ export default class SearchForm extends Component {
                       required
                       type="text" placeholder="Nama Owner" 
                       onChange={(event) => {this.setState({ owner: event.target.value });}}
+                      value={this.state.owner}
                     />
                   </Col>
                 </Form.Group>
@@ -157,7 +214,8 @@ export default class SearchForm extends Component {
                     <Form.Control 
                       required
                       type="date"
-                      onChange={(event) => {this.setState({ certStart: event.target.value });}}
+                      onChange={(event) => {this.setState({ cert_start: event.target.value });}}
+                      value={this.state.cert_start}
                     />
                   </Col>
                 </Form.Group>
@@ -170,28 +228,38 @@ export default class SearchForm extends Component {
                     <Form.Control 
                       required
                       type="date"
-                      onChange={(event) => {this.setState({ certEnd: event.target.value });}}
+                      onChange={(event) => {this.setState({ cert_end: event.target.value });}}
+                      value={this.state.cert_end}
                     />
                   </Col>
                 </Form.Group>
 
+                <br />
+
                 <Form.Group as={Row}>
-                  <Col sm={2} />
-                  <Col sm={10} className="d-flex justify-content-end">
+                  <Col sm={6} className="d-flex justify-content-start">
+                    <Button 
+                      variant="danger"
+                      onClick={this.handleDelete}
+                    >
+                      Delete
+                    </Button>
+                  </Col>
+                  <Col sm={6} className="d-flex justify-content-end">
                     <Button variant="primary" type="submit">
                       Submit
                     </Button>
                   </Col>
                 </Form.Group>
               </Form>
-            </Container>
 
-            <Modal show={this.state.postSuccess} onHide={this.handleSuccessModalHide}>
-              <Modal.Header closeButton>
-                <Modal.Title>Input Data Berhasil!</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>Data hotel baru berhasil ditambahkan.</Modal.Body>
-            </Modal>
+              <Modal show={this.state.postSuccess} onHide={this.handleSuccessModalHide}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Edit Data Berhasil!</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Data hotel berhasil diubah.</Modal.Body>
+              </Modal>
+            </Container>
           </React.Fragment>
         ) : (
           <Redirect to="/login"/>
