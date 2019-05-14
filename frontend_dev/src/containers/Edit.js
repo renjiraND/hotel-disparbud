@@ -72,9 +72,9 @@ export default class Edit extends Component {
         Authorization: 'Token ' + localStorage.getItem("token")
       } 
     };
-    axios.put(`${config.apiBaseUrl}/hotels/`+ querystring.parse(this.props.location.search).id+`/` , payload, reqConfig)
+    axios.put(`${config.apiBaseUrl}/hotels/${querystring.parse(this.props.location.search).id}/`, payload, reqConfig)
       .then(response => {
-        if (response.status === 200) {
+        if (response.status === 200 || response.status === 204) {
           this.setState({ postSuccess: true })
         }
       })
@@ -83,6 +83,28 @@ export default class Edit extends Component {
           window.location.href = "/login";
 				} else {
 					alert("edit hotel error bang!");
+				}
+			});
+  }
+
+  handleDelete = (event) => {
+    event.preventDefault();
+    const reqConfig = { 
+      headers: {
+        Authorization: 'Token ' + localStorage.getItem("token")
+      } 
+    };
+    axios.delete(`${config.apiBaseUrl}/hotels/${querystring.parse(this.props.location.search).id}/`, reqConfig)
+      .then(response => {
+        if (response.status === 200 || response.status === 204) {
+          window.location.href = "/";
+        }
+      })
+      .catch(error => {
+				if (error.response.status === 401) {
+          window.location.href = "/login";
+				} else {
+					alert("delete hotel error bang!");
 				}
 			});
   }
@@ -212,9 +234,18 @@ export default class Edit extends Component {
                   </Col>
                 </Form.Group>
 
+                <br />
+
                 <Form.Group as={Row}>
-                  <Col sm={2} />
-                  <Col sm={10} className="d-flex justify-content-end">
+                  <Col sm={6} className="d-flex justify-content-start">
+                    <Button 
+                      variant="danger"
+                      onClick={this.handleDelete}
+                    >
+                      Delete
+                    </Button>
+                  </Col>
+                  <Col sm={6} className="d-flex justify-content-end">
                     <Button variant="primary" type="submit">
                       Submit
                     </Button>
@@ -224,9 +255,9 @@ export default class Edit extends Component {
 
               <Modal show={this.state.postSuccess} onHide={this.handleSuccessModalHide}>
                 <Modal.Header closeButton>
-                  <Modal.Title>Input Data Berhasil!</Modal.Title>
+                  <Modal.Title>Edit Data Berhasil!</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Data hotel baru berhasil ditambahkan.</Modal.Body>
+                <Modal.Body>Data hotel berhasil diubah.</Modal.Body>
               </Modal>
             </Container>
           </React.Fragment>
