@@ -71,6 +71,8 @@ def customer_login(request):
 
     try:
         user = User.objects.get(username=username)
+        print(password.encode('utf-8')) 
+        print(user.password.encode('utf-8'))
         if not user.check_password(password):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
     except:
