@@ -6,16 +6,14 @@ import axios from 'axios'
 
 export default class Login extends Component {
 	constructor(props) {
-		super(props);
+    super(props);
+    
+    localStorage.removeItem('token');
 
 		this.state = {
 			email: "",
 			password: "",
 		};
-	}
-
-	componentDidMount() {
-		localStorage.removeItem('token');
 	}
 
 	validateForm() {
@@ -73,7 +71,7 @@ export default class Login extends Component {
                   				</Form.Group> */}
 								<Button variant="primary" type="submit" className="float-right">
 									Submit
-                  				</Button>
+                </Button>
 							</div>
 						</Form>
 					</Card.Body>

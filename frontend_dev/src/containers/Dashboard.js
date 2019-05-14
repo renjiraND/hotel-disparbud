@@ -3,6 +3,7 @@ import axios from "axios";
 import SearchForm from "./SearchForm";
 import PaginatedSearchResult from "../components/PaginatedSearchResult";
 import { config } from "../config";
+import { Redirect } from "react-router"
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -16,37 +17,35 @@ export default class Dashboard extends Component {
       currPage: 0,
       numPages: 1
     };
-
-    const reqConfig = {
-      headers: {
-        Authentication: 'Token ' + localStorage.getItem("token")
-      }
-    };
-    axios.get(this.getSearchUrl(this.state.currPage + 1), reqConfig)
-      .then(response => {
-        if (response.status === 200) {
-          this.setState({
-            query: "",
-            data: response.data.hotels,
-            currPage: 0,
-            numPages: response.data.max_pages
-          })
-        }
-      })
-      .catch(error => {
-				if (error.response.status === 401) {
-					window.location.href = "/login";
-				} else {
-					alert("load data hotel error bos!");
-				}
-			});
   }
 
   componentDidMount() {
-		if (localStorage.getItem("token") === null) {
-      window.location.href = "/login";
+    if (localStorage.getItem("token") !== null) {
+      const reqConfig = {
+        headers: {
+          Authentication: 'Token ' + localStorage.getItem("token")
+        }
+      };
+      axios.get(this.getSearchUrl(this.state.currPage + 1), reqConfig)
+        .then(response => {
+          if (response.status === 200) {
+            this.setState({
+              query: "",
+              data: response.data.hotels,
+              currPage: 0,
+              numPages: response.data.max_pages
+            })
+          }
+        })
+        .catch(error => {
+          if (error.response.status === 401) {
+            window.location.href = "/login";
+          } else {
+            alert("load data hotel error bos!");
+          }
+        });
     }
-	}
+  }
 
   getSearchUrl(page, name, district, star) {
     let url = `${config.apiBaseUrl}/search/?`;
@@ -157,16 +156,23 @@ export default class Dashboard extends Component {
   }
 
   render() {
+    const isUserLoggedIn = (localStorage.getItem("token") !== null);
     return (
       <React.Fragment>
-        {<SearchForm onSubmit={this.handleSearch} />}
-        <br />
-        <PaginatedSearchResult
-          data={this.state.data}
-          currPage={this.state.currPage}
-          numPages={this.state.numPages}
-          onPageChange={this.handlePageChange}
-        />
+        {isUserLoggedIn ? (
+          <React.Fragment>
+            <SearchForm onSubmit={this.handleSearch} />
+            <br />
+            <PaginatedSearchResult
+              data={this.state.data}
+              currPage={this.state.currPage}
+              numPages={this.state.numPages}
+              onPageChange={this.handlePageChange}
+            />
+          </React.Fragment>
+        ) : (
+          <Redirect to="/login"/>
+        )}
       </React.Fragment>
     );
   }
