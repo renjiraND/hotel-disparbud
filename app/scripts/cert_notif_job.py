@@ -71,16 +71,22 @@ def check_and_notify_near_expired_hotel():
 	print('check_and_notify_near_expired_hotel')
 	from django.core.mail import send_mail
 	from app.scripts.cert_notif_job import get_near_expired_hotel, construct_cert_notif_email_body
+	from django.contrib.auth import get_user_model
+
+	User = get_user_model()
 
 	near_expired_hotels = get_near_expired_hotel()
+
 	if len(near_expired_hotels) > 0:
 		email_subject = 'Notifikasi Sertifikasi Hotel Yang Akan Berakhir'
 		email_body = construct_cert_notif_email_body(near_expired_hotels)
-		recipient_list = ['aahmadizzan@gmail.com']
+		recipient_list = [x.username for x in User.objects.filter(is_lsu=False)]
+		recipient_list.extend([x.username for x in User.objects.filter(is_lsu__isnull=True)])
+		recipient_list = list(set(recipient_list))
 
 		send_mail(subject=email_subject,
 				message=email_body,
-				from_email='sample@mail.com',
+				from_email='disparbud@mail.com',
 				recipient_list=recipient_list,
 				fail_silently=False)
 
