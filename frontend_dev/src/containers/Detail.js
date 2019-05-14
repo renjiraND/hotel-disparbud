@@ -9,8 +9,8 @@ export default class Dashboard extends Component {
         super(props);
 
         this.state = {
-            name: "Arya Duta",
-            address: "Jl. Sumatera No. 51",
+            name: "Nama Hotel",
+            address: "Alamat Hotel",
             star: "5",
             owner: "Bapak",
             cert_end: "10/10/20"
@@ -20,9 +20,9 @@ export default class Dashboard extends Component {
 
         let request = {
             url : config.apiBaseUrl + "/hotels/" + id,
-            // headers: {
-            //     'Authentication': 'Token ' + localStorage.getItem("token"),
-            // },
+            headers: {
+                'Authentication': 'Token ' + localStorage.getItem("token"),
+            },
         }
 
         axios( request )
@@ -60,14 +60,10 @@ export default class Dashboard extends Component {
                 <DetailData ket={"Owner"} icon={"account_circle"} data={this.state.owner}/>
                 <DetailData ket={"Masa Berlaku"} icon={"calendar_today"} data={this.state.cert_end.substr(0, 10)}/>
             </Media.Body>
-            <img
-                width={250}
-                height={200}
-                className="ml-3"
-                src="holder.js/64x64"
-                alt="Generic placeholder"
-            />
         </Media>
+        <Container>
+            <Button className="float-right"> <span>Ubah</span> <i className="material-icons">edit</i></Button>
+        </Container>
       </React.Fragment>
     );
   }
